@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Wrapper;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
  * @since 2019-03-24
  */
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/characterSets2")
 @Api("swaggerDemoController相关的api")
 public class CharacterSetsController2 {

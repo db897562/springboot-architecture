@@ -23,7 +23,7 @@ spring:
       max-open-prepared-statements: 50
       max-pool-prepared-statement-per-connection-size: 20
   mybatis-plus:
-    mapper-locations: classpath:/mapper/*.xml
+    mapper-locations: classpath:/mapper/*Mapper.xml
     type-aliases-package: com.architecture.entity
   devtools:
     restart:

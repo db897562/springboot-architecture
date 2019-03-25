@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -58,6 +61,22 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
             }
         }
         return -1;
+    }
+
+    /**
+     * 允许跨域请求
+     *
+     * @return
+     */
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.addAllowedOrigin("*"); // 1
+        corsConfig.addAllowedHeader("*"); // 2
+        corsConfig.addAllowedMethod("*"); // 3
+        source.registerCorsConfiguration("/**", corsConfig); // 4
+        return new CorsFilter(source);
     }
  
 }
