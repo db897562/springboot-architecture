@@ -37,6 +37,7 @@ public class CharacterSetsController2 {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<CharacterSets> getStudent() {
         log.info("开始查询某个学生信息");
+        int i = 2/0;
         EntityWrapper<CharacterSets> ew = new EntityWrapper<CharacterSets>();
         return characterSetsService.selectList(ew);
     }

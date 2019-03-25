@@ -22,12 +22,29 @@ public class ExceptionHandlerAdvice {
      */
     @ExceptionHandler(InvalidReqException.class)
     @ResponseBody
-    public WebResponse restError(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+    public WebResponse invalidReqException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         InvalidReqException restException = (InvalidReqException) ex;
         WebResponse resp = new WebResponse();
         resp.setSuccess(false);
         resp.setStatusCode(restException.getErrorCode());
         resp.setErrorMessage(restException.getErrorMessage());
+        return resp;
+    }
+
+    /**
+     * 处理Rest接口请求时的异常
+     * @param request
+     * @param response
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public WebResponse businessException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+        WebResponse resp = new WebResponse();
+        resp.setSuccess(false);
+        resp.setStatusCode("500");
+        resp.setErrorMessage(ex.getMessage());
         return resp;
     }
 }
