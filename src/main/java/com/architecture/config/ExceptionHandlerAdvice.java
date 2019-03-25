@@ -1,15 +1,21 @@
 package com.architecture.config;
 
 import com.architecture.pojo.common.WebResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Result;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
 
@@ -41,10 +47,26 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public WebResponse businessException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+        ex.printStackTrace();
         WebResponse resp = new WebResponse();
         resp.setSuccess(false);
         resp.setStatusCode("500");
         resp.setErrorMessage(ex.getMessage());
         return resp;
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public WebResponse handleIllegalParamException(MethodArgumentNotValidException ex) {
+        WebResponse resp = new WebResponse();
+        List<ObjectError> errors = ex.getBindingResult().getAllErrors();
+        String tips = "参数不合法";
+        if (errors.size() > 0) {
+            tips = errors.get(0).getDefaultMessage();
+        }
+        resp.setSuccess(false);
+        resp.setStatusCode("500");
+        resp.setErrorMessage(tips);
+        return resp;
+    }
+
 }

@@ -10,4 +10,5 @@ public class WebResponse {
     private String errorMessage;
     private Object data;
     private Long costTime;
+    private String exception;
 }
