@@ -2,6 +2,7 @@ package com.architecture.config;
 
 import com.architecture.pojo.common.WebResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,11 +27,13 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(InvalidReqException.class)
     @ResponseBody
     public WebResponse invalidReqException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+        log.error(ex.getMessage(),ex);
         InvalidReqException restException = (InvalidReqException) ex;
         WebResponse resp = new WebResponse();
         resp.setSuccess(false);
         resp.setStatusCode(restException.getErrorCode());
         resp.setErrorMessage(restException.getErrorMessage());
+        resp.setException(ExceptionUtils.getRootCauseStackTrace(ex));
         return resp;
     }
 
@@ -44,11 +47,12 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public WebResponse businessException(HttpServletRequest request, HttpServletResponse response, Exception ex) {
-        ex.printStackTrace();
+        log.error(ex.getMessage(),ex);
         WebResponse resp = new WebResponse();
         resp.setSuccess(false);
         resp.setStatusCode("500");
         resp.setErrorMessage(ex.getMessage());
+        resp.setException(ExceptionUtils.getRootCauseStackTrace(ex));
         return resp;
     }
 
