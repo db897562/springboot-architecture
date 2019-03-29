@@ -15,7 +15,7 @@ public class MybatisPlusConfiguration {
 	 * mybatis-plus分页插件<br>
 	 * 文档：http://mp.baomidou.com<br>
 	 */
-	//@Bean
+	@Bean
 	public PaginationInterceptor paginationInterceptor() {
 		PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
 		paginationInterceptor.setDialectType(DBType.MYSQL.getDb());
