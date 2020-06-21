@@ -36,7 +36,8 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
     @Bean
     public ReturnHandler getReturnHandler(){
         List<HttpMessageConverter<?>> messageConverters = requestMappingHandlerAdapter.getMessageConverters();
-        return new ReturnHandler(messageConverters);//初始化过滤器
+        //初始化过滤器
+        return new ReturnHandler(messageConverters);
     }
  
  
@@ -72,10 +73,10 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.addAllowedOrigin("*"); // 1
-        corsConfig.addAllowedHeader("*"); // 2
-        corsConfig.addAllowedMethod("*"); // 3
-        source.registerCorsConfiguration("/**", corsConfig); // 4
+        corsConfig.addAllowedOrigin("*");
+        corsConfig.addAllowedHeader("*");
+        corsConfig.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", corsConfig);
         return new CorsFilter(source);
     }
  
